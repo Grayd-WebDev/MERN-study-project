@@ -1,6 +1,6 @@
 let restaurants;
 
-export default class RestaurantDAO {
+export default class RestaurantsDAO {
   static async injectDB(conn) {
     if (restaurants) {
       return;
@@ -50,7 +50,7 @@ export default class RestaurantDAO {
       const totalNumRestaurants = await restaurants.countDocument(query);
 
       return { restaurantsList, totalNumRestaurants };
-    } catch (error) {
+    } catch (e) {
       console.error(
         `Unable to convert cursor to array or problem counting documents, ${e}`
       );

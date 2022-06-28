@@ -1,4 +1,4 @@
-import RestaurantDAO from "./dao/restaurantsDAO";
+import RestaurantsDAO from "./dao/restaurantsDAO.js";
 
 export default class RestaurantController {
   static async apiGetRestaurants(req, res, next) {
@@ -19,7 +19,7 @@ export default class RestaurantController {
     }
 
     const { restaurantList, totalNumRestaurants } =
-      await RestaurantDAO.getRestaurants({ filters, page, perPage });
+      await RestaurantsDAO.getRestaurants({ filters, page, perPage });
 
     const response = {
       restaurants: restaurantList,
