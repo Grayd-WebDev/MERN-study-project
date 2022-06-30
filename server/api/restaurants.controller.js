@@ -18,11 +18,11 @@ export default class RestaurantController {
       filters.name = name;
     }
 
-    const { restaurantList, totalNumRestaurants } =
+    const { restaurantsList, totalNumRestaurants } =
       await RestaurantsDAO.getRestaurants({ filters, page, perPage });
-
-    const response = {
-      restaurants: restaurantList,
+   
+      const response = {
+      restaurants: restaurantsList,
       page,
       filters,
       entries_per_page: perPage,
