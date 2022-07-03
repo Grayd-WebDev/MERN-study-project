@@ -30,12 +30,12 @@ export default class ReviewsController {
       const text = req.body.text;
       const date = new Date();
 
-      const reviewResponse = await ReviewsDAO.updateReview({
+      const reviewResponse = await ReviewsDAO.updateReview(
         reviewId,
         userId,
         text,
-        date,
-      });
+        date
+      );
 
       if (reviewResponse.modifiedCount === 0) {
         throw new Error(

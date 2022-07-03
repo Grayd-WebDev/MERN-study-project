@@ -25,7 +25,6 @@ export default class ReviewsDAO {
         text: review,
         date,
       };
-      console.log(reviewDoc);
       return await reviews.insertOne(reviewDoc);
     } catch (error) {
       console.error(`Unable to post review: ${error}`);
@@ -52,10 +51,13 @@ export default class ReviewsDAO {
         _id: ObjectId(reviewId),
         user_id: userId,
       });
+      console.log(deleteResponse);
+      if (deleteResponse.deletedCount === 0) throw new Error(error);
+
       return deleteResponse;
     } catch (error) {
       console.error(`Unable to delete review: ${error}`);
-      return { error };
+      throw new Error(error);
     }
   }
 }
