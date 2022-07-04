@@ -5,6 +5,8 @@ import express from "express";
 const router = express.Router();
 
 router.get("/", RestaurantsController.apiGetRestaurants);
+router.get("/cuisines", RestaurantsController.apiGetCuisines);
+router.get("/id/:id", RestaurantsController.apiGetOneRestaurant);
 
 router
   .route("/review")

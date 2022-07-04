@@ -20,8 +20,8 @@ export default class RestaurantController {
 
     const { restaurantsList, totalNumRestaurants } =
       await RestaurantsDAO.getRestaurants({ filters, page, perPage });
-   
-      const response = {
+
+    const response = {
       restaurants: restaurantsList,
       page,
       filters,
@@ -30,5 +30,31 @@ export default class RestaurantController {
     };
 
     return res.status(200).json(response);
+  }
+
+  static async apiGetOneRestaurant(req, res, next) {
+    try {
+      const id = req.params.id || {};
+      const restaurant = await RestaurantsDAO.getOneRestaurant(id);
+
+      if (!restaurant) {
+        return res.status(404).json({ error: "Nor found" });
+      }
+      return res.status(200).json({ message: "success", restaurant });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: `Server problems, sorry... , error: ${error}` });
+    }
+  }
+  static async apiGetCuisines(req, res, next) {
+    try {
+      const cuisines = await RestaurantsDAO.getCuisines();
+      return res.status(200).json({ message: "success", cuisines });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: `Server problems, sorry... , error: ${error}` });
+    }
   }
 }
