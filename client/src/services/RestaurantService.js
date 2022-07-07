@@ -28,4 +28,8 @@ export default class RestaurantService {
   static getCuisines() {
     return http.get("/cuisines");
   }
-}
+
+  static getZipcodes() {
+    return http.get("/zipcodes");
+  }
+} 

@@ -107,8 +107,22 @@ export default class RestaurantsDAO {
     let cuisines = [];
     try {
       cuisines = await restaurants.distinct("cuisine");
+      cuisines = ["All cuisines"].concat(cuisines);
       console.log(cuisines);
+
       return cuisines;
+    } catch (error) {
+      console.error(`Unable to get cuisines, ${error}`);
+      throw new Error(error);
+    }
+  }
+
+  static async getZipcodes() {
+    let zipcodes = [];
+    try {
+      zipcodes = await restaurants.distinct("address.zipcode");
+      zipcodes[0] = "Any zipcodes";
+      return zipcodes;
     } catch (error) {
       console.error(`Unable to get cuisines, ${error}`);
       throw new Error(error);

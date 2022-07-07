@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.get("/", RestaurantsController.apiGetRestaurants);
 router.get("/cuisines", RestaurantsController.apiGetCuisines);
+router.get("/zipcodes", RestaurantsController.apiGetZipcodes);
 router.get("/id/:id", RestaurantsController.apiGetOneRestaurant);
 
 router

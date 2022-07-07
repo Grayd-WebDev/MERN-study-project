@@ -9,21 +9,29 @@ const RestaurantsList = () => {
   const [searchName, setSearchName] = useState("");
   const [searchZip, setSearchZip] = useState("");
   const [cuisines, setCuisines] = useState([]);
+  const [zipcodes, setZipcodes] = useState([]);
 
   const getRestaurants = (page = 1) => {
     RestaurantService.getAll(page).then((res) => {
       setRestaurants(res.data.restaurants);
     });
   };
+
   const getCuisines = (page = 1) => {
     RestaurantService.getCuisines().then((res) => {
       setCuisines(res.data.cuisines);
     });
   };
 
+  const getZipcodes = (page = 1) => {
+    RestaurantService.getZipcodes().then((res) => {
+      setZipcodes(res.data.zipcodes);
+    });
+  };
+
   const find = (query, by) => {
     RestaurantService.find(query, by).then((res) => {
-      console.log(res.data.restaurants);
+      // console.log(res.data.restaurants);
       setRestaurants(res.data.restaurants);
     });
   };
@@ -43,16 +51,26 @@ const RestaurantsList = () => {
   }, [searchName]);
 
   useEffect(() => {
-    find(searchZip, "zipcode");
+    if (searchZip === "Any zipcodes") {
+      getRestaurants();
+    } else {
+      find(searchZip, "zipcode");
+    }
   }, [searchZip]);
 
   useEffect(() => {
-    find(searchCuisine, "cuisine");
+    if (searchCuisine === "All cuisines") {
+      getRestaurants();
+    } else {
+      find(searchCuisine, "cuisine");
+    }
   }, [searchCuisine]);
 
   useEffect(() => {
     getRestaurants();
     getCuisines();
+    getZipcodes();
+    console.log(zipcodes);
   }, []);
 
   return (
@@ -68,13 +86,14 @@ const RestaurantsList = () => {
           />
         </div>
         <div>
-          <input
-            className="form-control form-control-lg"
-            placeholder="Restaurant zip"
+          <select
             onChange={onChangeSearchZip}
-            value={searchZip}
-            type="text"
-          />
+            className="form-select form-select-lg"
+          >
+            {zipcodes.map((zipcode) => {
+              return <option value={zipcode}>{zipcode.substr(0, 20)}</option>;
+            })}
+          </select>
         </div>
         <div>
           <select
@@ -98,6 +117,7 @@ const RestaurantsList = () => {
               <div class="card-body text-success">
                 <h5 class="card-title">{res.name}</h5>
                 <p class="card-text">{res.cuisine}</p>
+                <button className="btn btn-primary">View Reviews</button>
               </div>
               <div class="card-footer bg-transparent border-success">
                 <a href={"https://www.google.com/maps/place/" + address}>

@@ -57,4 +57,15 @@ export default class RestaurantController {
         .json({ message: `Server problems, sorry... , error: ${error}` });
     }
   }
+  
+  static async apiGetZipcodes(req, res, next) {
+    try {
+      const zipcodes = await RestaurantsDAO.getZipcodes();
+      return res.status(200).json({ message: "success", zipcodes });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: `Server problems, sorry... , error: ${error}` });
+    }
+  }
 }
