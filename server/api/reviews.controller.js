@@ -4,6 +4,10 @@ export default class ReviewsController {
   static async apiPostReview(req, res, next) {
     try {
       const { restaurantId, text } = req.body;
+      if (!restaurantId || !text) {
+        console.log(restaurantId);
+        return res.status(400).json({ error: "Wrong data" });
+      }
       const review = text;
       const userInfo = {
         name: req.body.name,
@@ -54,7 +58,7 @@ export default class ReviewsController {
     try {
       const reviewId = req.query.id;
       const userId = req.query.user_id;
-
+      console.log(reviewId, userId);
       await ReviewsDAO.deleteReview(reviewId, userId);
 
       return res.json({ message: "The review was deleted successfully" });

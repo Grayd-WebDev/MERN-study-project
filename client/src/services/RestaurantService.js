@@ -13,16 +13,18 @@ export default class RestaurantService {
     return http.get(`?${by}=${query}&page=${page}`);
   }
 
-  static createReview(data) {
+  static createOrUpdateReview(data, isEditing = false) {
+    console.log("createOrUpdateReview",data, isEditing);
+    if (isEditing) return http.put("/review", data);
+
     return http.post("/review", data);
   }
 
-  static updateReview(data) {
-    return http.put("/review", data);
-  }
-
-  static deleteReview(id) {
-    return http.delete(`/review?id=${id}`);
+  static deleteReview(id, userId) {
+    console.log(userId);
+    return http.delete(`/review?id=${id}&user_id=${userId}`, {
+      data: { user_id: userId },
+    });
   }
 
   static getCuisines() {
@@ -32,4 +34,4 @@ export default class RestaurantService {
   static getZipcodes() {
     return http.get("/zipcodes");
   }
-} 
+}

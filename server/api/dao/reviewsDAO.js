@@ -47,12 +47,14 @@ export default class ReviewsDAO {
 
   static async deleteReview(reviewId, userId) {
     try {
+      console.log(reviewId, userId);
       const deleteResponse = await reviews.deleteOne({
         _id: ObjectId(reviewId),
         user_id: userId,
       });
       console.log(deleteResponse);
-      if (deleteResponse.deletedCount === 0) throw new Error(error);
+      if (deleteResponse.deletedCount === 0)
+        throw new Error("Something went wrong while deleting!");
 
       return deleteResponse;
     } catch (error) {

@@ -1,5 +1,6 @@
 import React from 'react'
-import {Link, Outlet} from "react-router-dom";
+import {Outlet} from "react-router-dom";
+import Footer from './Footer';
 
 import NavigationBar from './NavigationBar';
 
@@ -8,9 +9,9 @@ const Layout = () => {
     <>
     <NavigationBar />
     <div className='container'>
-    <Outlet/>
-
+      <Outlet/>
     </div>
+    <Footer />
     </>
     
   )

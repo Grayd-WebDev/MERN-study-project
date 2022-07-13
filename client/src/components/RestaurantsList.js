@@ -1,9 +1,9 @@
-import React from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import RestaurantService from "../services/RestaurantService";
 
-const RestaurantsList = () => {
+const RestaurantsList = ({ user }) => {
   const [searchCuisine, setSearchCuisine] = useState("");
   const [restaurants, setRestaurants] = useState([]);
   const [searchName, setSearchName] = useState("");
@@ -31,7 +31,6 @@ const RestaurantsList = () => {
 
   const find = (query, by) => {
     RestaurantService.find(query, by).then((res) => {
-      // console.log(res.data.restaurants);
       setRestaurants(res.data.restaurants);
     });
   };
@@ -70,9 +69,7 @@ const RestaurantsList = () => {
     getRestaurants();
     getCuisines();
     getZipcodes();
-    console.log(zipcodes);
   }, []);
-
   return (
     <div>
       <div className="d-flex flex-row justify-content-between">
@@ -109,6 +106,7 @@ const RestaurantsList = () => {
       <div className="restaurants-container d-flex flex-row justify-content-between flex-wrap">
         {restaurants.map((res) => {
           const address = `${res.address.building} ${res.address.street}, ${res.address.zipcode}`;
+          console.log("wee", user);
           return (
             <div
               class="card border-success mb-3 mt-4 p-2"
@@ -117,10 +115,21 @@ const RestaurantsList = () => {
               <div class="card-body text-success">
                 <h5 class="card-title">{res.name}</h5>
                 <p class="card-text">{res.cuisine}</p>
-                <button className="btn btn-primary">View Reviews</button>
+                <Link
+                  to={`/restaurants/${res._id}`}
+                  state={user}
+                  type="button"
+                  className="btn btn-primary"
+                >
+                  View Reviews
+                </Link>
               </div>
               <div class="card-footer bg-transparent border-success">
-                <a href={"https://www.google.com/maps/place/" + address}>
+                <a
+                  target="_blank"
+                  href={"https://www.google.com/maps/place/" + address}
+                  rel="noreferrer"
+                >
                   {address}
                 </a>
               </div>
